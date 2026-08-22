@@ -39,7 +39,7 @@ namespace Wallet.Domain.Entities
             RegisteredAt = DateTimeOffset.UtcNow;
         }
 
-        public static User CreateCustomer(
+        public static User Create(
             string firstName,
             string otherNames,
             DateOfBirth dateOfBirth,
