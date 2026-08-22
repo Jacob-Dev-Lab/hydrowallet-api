@@ -3,7 +3,7 @@ using Wallet.Domain.Exceptions;
 
 namespace Wallet.Domain.ValueObjects
 {
-    public sealed record BDateOfBirth
+    public sealed record DateOfBirth
     {
         private const int MinimumAge = 18;
         private const int MaximumAgeYears = 120;
@@ -11,9 +11,9 @@ namespace Wallet.Domain.ValueObjects
 
         public DateOnly Value { get; }
 
-        private BDateOfBirth(DateOnly value) => Value = value;
+        private DateOfBirth(DateOnly value) => Value = value;
 
-        public static BDateOfBirth Create(string value)
+        public static DateOfBirth Create(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
                 throw new DomainValidationException("Birth date is required");
@@ -41,7 +41,7 @@ namespace Wallet.Domain.ValueObjects
                 throw new DomainValidationException(
                     $"Must be at least {MinimumAge} years old");
 
-            return new BDateOfBirth(parsedDate);
+            return new DateOfBirth(parsedDate);
         }
 
         private static bool IsAtLeast(DateOnly birthDate, DateOnly today, int minimumAge)

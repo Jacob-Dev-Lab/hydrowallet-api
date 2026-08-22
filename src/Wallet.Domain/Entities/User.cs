@@ -11,7 +11,7 @@ namespace Wallet.Domain.Entities
         public string FirstName { get; private set; } = string.Empty;
         public string OtherNames { get; private set; } = string.Empty;
 
-        public BDateOfBirth DateOfBirth { get; private set; }
+        public DateOfBirth DateOfBirth { get; private set; }
         public Email Email { get; private set; }
         public MobileNumber MobileNumber { get; private set; }
 
@@ -23,7 +23,7 @@ namespace Wallet.Domain.Entities
         private User(
             string firstName,
             string otherNames,
-            BDateOfBirth dateOfBirth,
+            DateOfBirth dateOfBirth,
             Email email,
             MobileNumber mobileNumber,
             string passwordHash)
@@ -42,7 +42,7 @@ namespace Wallet.Domain.Entities
         public static User CreateCustomer(
             string firstName,
             string otherNames,
-            BDateOfBirth dateOfBirth,
+            DateOfBirth dateOfBirth,
             Email email,
             MobileNumber mobileNumber,
             string passwordHash)
