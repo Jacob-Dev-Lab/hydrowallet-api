@@ -1,7 +1,7 @@
 ﻿using Wallet.Domain.Entities;
 using Wallet.Domain.ValueObjects;
 
-namespace Wallet.Application.Interfaces
+namespace Wallet.Application.Common.Interfaces
 {
     public interface IUserRepository
     {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Wallet.Application.Common
+﻿namespace Wallet.Application.Common.Results
 {
     public class Result
     {
