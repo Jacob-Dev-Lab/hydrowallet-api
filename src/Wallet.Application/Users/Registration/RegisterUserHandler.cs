@@ -51,6 +51,7 @@ namespace Wallet.Application.Users.Registration
             // Save the new user to the repository
             _userRepository.Add(newUser);
 
+
             var response = new RegisterUserResponse(
                 newUser.Id,
                 newUser.FirstName,

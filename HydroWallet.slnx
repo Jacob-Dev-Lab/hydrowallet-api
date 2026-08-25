@@ -6,6 +6,7 @@
     <Project Path="src/Wallet.Infrastructure/Wallet.Infrastructure.csproj" />
   </Folder>
   <Folder Name="/tests/">
+    <Project Path="tests/Wallet.Application.Tests/Wallet.Application.Tests.csproj" />
     <Project Path="tests/Wallet.Domain.Tests/Wallet.Domain.Tests.csproj" />
   </Folder>
 </Solution>
