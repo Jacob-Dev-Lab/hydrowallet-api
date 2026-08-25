@@ -9,13 +9,16 @@ namespace Wallet.Application.Users.Registration
     {
         private readonly IUserRepository _userRepository;
         private readonly IPasswordHasher _passwordHasher;
+        private readonly IUnitOfWork _unitOfWork;
 
         public RegisterUserHandler(
             IUserRepository userRepository, 
-            IPasswordHasher passwordHasher)
+            IPasswordHasher passwordHasher,
+            IUnitOfWork unitOfWork)
         {
             _userRepository = userRepository;
             _passwordHasher = passwordHasher;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<Result<RegisterUserResponse>> Handle(
@@ -50,7 +53,7 @@ namespace Wallet.Application.Users.Registration
 
             // Save the new user to the repository
             _userRepository.Add(newUser);
-
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             var response = new RegisterUserResponse(
                 newUser.Id,
