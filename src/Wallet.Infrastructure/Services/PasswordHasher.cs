@@ -17,6 +17,6 @@ namespace Wallet.Infrastructure.Services
             var result = _hasher.VerifyHashedPassword(null!, hash, password);
             return  result == PasswordVerificationResult.Success;
         }
-        
+
     }
 }
