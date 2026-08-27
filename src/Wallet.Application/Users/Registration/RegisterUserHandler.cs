@@ -39,6 +39,10 @@ namespace Wallet.Application.Users.Registration
                 return Result<RegisterUserResponse>
                     .Failure("User already exists.");
 
+            if (command.Password != command.ConfirmPassword)
+                return Result<RegisterUserResponse>
+                    .Failure("Passwords do not match.");
+
             // Hash the password
             var hashedPassword = _passwordHasher.Hash(command.Password);
 
