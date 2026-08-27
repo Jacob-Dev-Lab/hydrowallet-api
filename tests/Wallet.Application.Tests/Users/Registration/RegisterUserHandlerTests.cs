@@ -10,6 +10,7 @@ namespace Wallet.Application.Tests.Users.Registration
     {
         private readonly Mock<IUserRepository> _userRepository;
         private readonly Mock<IPasswordHasher> _passwordHasher;
+        private readonly Mock<IUnitOfWork> _unitOfWork;
 
         private readonly RegisterUserHandler _handler;
 
@@ -17,10 +18,12 @@ namespace Wallet.Application.Tests.Users.Registration
         {
             _userRepository = new Mock<IUserRepository>();
             _passwordHasher = new Mock<IPasswordHasher>();
+            _unitOfWork = new Mock<IUnitOfWork>();
 
             _handler = new RegisterUserHandler(
                 _userRepository.Object,
-                _passwordHasher.Object);
+                _passwordHasher.Object,
+                _unitOfWork.Object);
         }
 
         [Fact]
