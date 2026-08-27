@@ -18,6 +18,9 @@ namespace Wallet.Infrastructure.Data.Configurations
                 .IsRequired()
                 .HasMaxLength(100);
 
+            builder.Property(u => u.DateOfBirth)
+                .IsRequired();
+
             builder.Property(u => u.Email)
                 .IsRequired()
                 .HasMaxLength(100);
