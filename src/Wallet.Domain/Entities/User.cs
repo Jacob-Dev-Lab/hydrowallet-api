@@ -20,6 +20,8 @@ namespace Wallet.Domain.Entities
         public UserStatus UserStatus { get; private set; }
         public DateTimeOffset RegisteredAt { get; private set; }
 
+        private User() { }
+
         private User(
             string firstName,
             string otherNames,
