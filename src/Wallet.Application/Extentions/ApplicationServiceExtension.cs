@@ -11,6 +11,9 @@ namespace Wallet.Application.Extentions
         {
             services.AddScoped<RegisterUserHandler>();
 
+            services.AddValidatorsFromAssemblyContaining
+                <RegisterUserValidator>();
+
             return services;
         }
     }
