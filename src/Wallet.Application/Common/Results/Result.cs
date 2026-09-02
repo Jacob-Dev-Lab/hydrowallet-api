@@ -3,35 +3,40 @@
     public class Result
     {
         public bool IsSuccess { get; }
-        public string? ErrorMessage { get; }
+        public IReadOnlyCollection<string> ErrorMessages { get; }
 
-        protected Result(bool isSuccess, string? errorMessage)
+        protected Result(
+            bool isSuccess, 
+            IReadOnlyCollection<string>? errorMessages = null)
         {
             IsSuccess = isSuccess;
-            ErrorMessage = errorMessage;
+            ErrorMessages = errorMessages ?? [];
         }
 
         public static Result Success() 
-            => new Result(true, null);
+            => new Result(true);
 
-        public static Result Failure(string errorMessage)
-            => new Result(false, errorMessage);
+        public static Result Failure(params string[] errorMessages)
+            => new Result(false, errorMessages);
     }
 
     public class Result<T> : Result
     {
         public T? Value { get; }
 
-        private Result(bool isSuccess, string? errorMessage, T? value)
-            : base(isSuccess, errorMessage)
+        private Result(
+            bool isSuccess,
+            T? value,
+            IReadOnlyCollection<string>? errorMessages = null)
+            : base(isSuccess, errorMessages)
         {
             Value = value;
         }
 
         public static Result<T> Success(T value)
-            => new Result<T>(true, null, value);
+            => new Result<T>(true, value);
         
-        public static new Result<T> Failure(string errorMessage)
-            => new Result<T>(false, errorMessage, default);
+        public static new Result<T> Failure(params string[] errorMessages)
+            => new Result<T>(false, default, errorMessages);
     }
 }

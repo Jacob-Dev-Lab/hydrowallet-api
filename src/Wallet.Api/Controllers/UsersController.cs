@@ -24,7 +24,7 @@ namespace Wallet.Api.Controllers
                 cancellationToken);
 
             if (!result.IsSuccess)
-                return BadRequest(result.ErrorMessage);
+                return BadRequest(result.ErrorMessages);
 
             return StatusCode(
                 StatusCodes.Status201Created, 

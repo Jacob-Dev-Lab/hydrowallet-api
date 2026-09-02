@@ -97,7 +97,9 @@ namespace Wallet.Application.Tests.Users.Registration
 
             // Assert
             Assert.False(result.IsSuccess);
-            Assert.Equal("User already exists.", result.ErrorMessage);
+            Assert.Equal(
+                "User already exists.", 
+                result.ErrorMessages.FirstOrDefault());
             Assert.Null(result.Value);
 
             _userRepository.Verify(repo => repo.Add(
