@@ -1,4 +1,5 @@
-﻿using Wallet.Application.Common.Interfaces;
+﻿using FluentValidation;
+using Wallet.Application.Common.Interfaces;
 using Wallet.Application.Common.Results;
 using Wallet.Domain.Entities;
 using Wallet.Domain.ValueObjects;
@@ -10,25 +11,41 @@ namespace Wallet.Application.Users.Registration
         private readonly IUserRepository _userRepository;
         private readonly IPasswordHasher _passwordHasher;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IValidator<RegisterUserCommand> _validator;
 
         public RegisterUserHandler(
             IUserRepository userRepository, 
             IPasswordHasher passwordHasher,
-            IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork,
+            IValidator<RegisterUserCommand> validator)
         {
             _userRepository = userRepository;
             _passwordHasher = passwordHasher;
             _unitOfWork = unitOfWork;
+            _validator = validator;
         }
 
         public async Task<Result<RegisterUserResponse>> Handle(
             RegisterUserCommand command, 
             CancellationToken cancellationToken)
         {
+            var validationResult = await _validator
+                .ValidateAsync(
+                    command, 
+                    cancellationToken);
+
+            if (!validationResult.IsValid)
+            {
+                var errors = validationResult.Errors
+                    .Select(e => e.ErrorMessage)
+                    .ToArray();
+
+                return Result<RegisterUserResponse>
+                    .Failure(errors);
+            }
+
             var dateOfBirth = DateOfBirth.Create(command.DateOfBirth);
-
             var email = Email.Create(command.Email);
-
             var mobileNumber = MobileNumber.Create(command.MobileNumber);
 
             // Check if the user already exists
