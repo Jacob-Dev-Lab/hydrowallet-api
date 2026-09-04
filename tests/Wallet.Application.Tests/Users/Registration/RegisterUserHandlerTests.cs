@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using FluentValidation;
+using Moq;
 using Wallet.Application.Common.Interfaces;
 using Wallet.Application.Users.Registration;
 using Wallet.Domain.Entities;
@@ -11,6 +12,7 @@ namespace Wallet.Application.Tests.Users.Registration
         private readonly Mock<IUserRepository> _userRepository;
         private readonly Mock<IPasswordHasher> _passwordHasher;
         private readonly Mock<IUnitOfWork> _unitOfWork;
+        private readonly Mock<IValidator<RegisterUserCommand>> _validator;
 
         private readonly RegisterUserHandler _handler;
 
@@ -19,11 +21,13 @@ namespace Wallet.Application.Tests.Users.Registration
             _userRepository = new Mock<IUserRepository>();
             _passwordHasher = new Mock<IPasswordHasher>();
             _unitOfWork = new Mock<IUnitOfWork>();
+            _validator = new Mock<IValidator<RegisterUserCommand>>();
 
             _handler = new RegisterUserHandler(
                 _userRepository.Object,
                 _passwordHasher.Object,
-                _unitOfWork.Object);
+                _unitOfWork.Object,
+                _validator.Object);
         }
 
         [Fact]
@@ -39,6 +43,11 @@ namespace Wallet.Application.Tests.Users.Registration
                 "Password123!",
                 "Password123!"
             );
+
+            _validator.Setup(v => v.ValidateAsync(
+                    It.IsAny<RegisterUserCommand>(),
+                    It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new FluentValidation.Results.ValidationResult());
 
             _userRepository.Setup(repo => repo.ExistsByEmailAsync(
                     It.IsAny<Email>(),
@@ -84,6 +93,11 @@ namespace Wallet.Application.Tests.Users.Registration
                 "Password123!",
                 "Password123!"
             );
+
+            _validator.Setup(v => v.ValidateAsync(
+                    It.IsAny<RegisterUserCommand>(),
+                    It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new FluentValidation.Results.ValidationResult());
 
             _userRepository.Setup(repo => repo.ExistsByEmailAsync(
                     It.IsAny<Email>(),
